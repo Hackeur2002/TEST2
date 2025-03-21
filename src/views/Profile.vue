@@ -2,6 +2,7 @@
     <div class="profile-page">
       <section class="section section-skew">
         <div class="container">
+            <button class="btn btn-danger mt-3" @click="logout">Déconnexion</button>
           <div class="row">
             <div class="col-lg-3">
               <div class="list-group">
@@ -210,7 +211,18 @@ export default {
         .catch((error) => {
           console.error("Erreur de suppression de l'événement:", error);
         });
-    }
+    },
+    logout() {
+    axios
+      .post("http://localhost:3333/api/logout", {}, { withCredentials: true }) // Envoi une requête POST à /api/logout
+      .then(() => {
+        this.isAuthenticated = false; // Définir l'état de l'authentification à false
+        this.$router.push("/login"); // Rediriger l'utilisateur vers la page de login
+      })
+      .catch((error) => {
+        console.error("Erreur lors de la déconnexion:", error);
+      });
+  }
   }
 };
 </script>
